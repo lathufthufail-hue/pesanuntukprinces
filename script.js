@@ -1,32 +1,36 @@
-// ========================================
-// 1. NAVIGASI ANTARHALAMAN
-// ========================================
+/* =====================================
+   1. NAVIGASI HALAMAN
+===================================== */
 
 const pages = document.querySelectorAll(".page");
 
+function showPage(pageId) {
+  const target = document.getElementById(pageId);
+
+  if (!target) return;
+
+  pages.forEach((page) => {
+    page.classList.remove("active");
+  });
+
+  target.classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
 document.querySelectorAll("[data-go]").forEach((button) => {
   button.addEventListener("click", () => {
-    const target = document.getElementById(button.dataset.go);
-
-    if (!target) return;
-
-    pages.forEach((page) => {
-      page.classList.remove("active");
-    });
-
-    target.classList.add("active");
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    showPage(button.dataset.go);
   });
 });
 
 
-// ========================================
-// 2. BUNGA DAN HATI MELAYANG
-// ========================================
+/* =====================================
+   2. ANIMASI BUNGA DAN HATI
+===================================== */
 
 const floatingContainer =
   document.getElementById("floating-container");
@@ -57,9 +61,7 @@ function createFloatingDecoration() {
 
   floatingContainer.appendChild(item);
 
-  setTimeout(() => {
-    item.remove();
-  }, duration * 1000);
+  setTimeout(() => item.remove(), duration * 1000);
 }
 
 for (let i = 0; i < 12; i++) {
@@ -69,14 +71,14 @@ for (let i = 0; i < 12; i++) {
 setInterval(createFloatingDecoration, 650);
 
 
-// ========================================
-// 3. LOVE QUIZ - 5 PERTANYAAN
-// ========================================
+/* =====================================
+   3. LOVE QUIZ
+===================================== */
 
 const quizQuestions = [
   {
     emoji: "💌",
-    question: "Kalau sayanggg tiba-tiba bilang ‘aku capek’, jawaban paling manis apa?",
+    question: "Kalau sayanggg tiba-tiba bilang 'aku capek', jawaban paling manis apa?",
     options: [
       "Ya sudah, tidur sana",
       "Mau cerita atau istirahat dulu? Aku temani yaa",
@@ -167,14 +169,14 @@ const quizResult =
 
 
 function renderQuizQuestion() {
-  const q = quizQuestions[quizIndex];
+  const question = quizQuestions[quizIndex];
 
-  if (!q || !quizQuestionEl) return;
+  if (!question) return;
 
   quizAnswered = false;
 
-  quizEmojiEl.textContent = q.emoji;
-  quizQuestionEl.textContent = q.question;
+  quizEmojiEl.textContent = question.emoji;
+  quizQuestionEl.textContent = question.question;
 
   quizProgressEl.textContent =
     `PERTANYAAN ${quizIndex + 1} DARI ${quizQuestions.length}`;
@@ -196,7 +198,7 @@ function renderQuizQuestion() {
 
   quizOptionsEl.innerHTML = "";
 
-  q.options.forEach((option, index) => {
+  question.options.forEach((option, index) => {
     const button = document.createElement("button");
 
     button.className = "quiz-option";
@@ -226,7 +228,7 @@ function chooseQuizAnswer(selected, selectedButton) {
 
   quizAnswered = true;
 
-  const q = quizQuestions[quizIndex];
+  const question = quizQuestions[quizIndex];
 
   const buttons =
     quizOptionsEl.querySelectorAll(".quiz-option");
@@ -234,15 +236,15 @@ function chooseQuizAnswer(selected, selectedButton) {
   buttons.forEach((button, index) => {
     button.disabled = true;
 
-    if (index === q.correct) {
+    if (index === question.correct) {
       button.classList.add("correct");
     }
   });
 
-  if (selected === q.correct) {
-    quizScore += 1;
+  if (selected === question.correct) {
+    quizScore++;
 
-    quizFeedbackEl.textContent = q.feedback;
+    quizFeedbackEl.textContent = question.feedback;
 
     selectedButton.classList.add("correct");
   } else {
@@ -301,47 +303,35 @@ function showQuizResult() {
 }
 
 
-if (quizNextBtn) {
-  quizNextBtn.addEventListener("click", () => {
-    if (!quizAnswered) return;
+quizNextBtn.addEventListener("click", () => {
+  if (!quizAnswered) return;
 
-    if (quizIndex < quizQuestions.length - 1) {
-      quizIndex += 1;
-      renderQuizQuestion();
-    } else {
-      showQuizResult();
-    }
-  });
-}
-
-
-// ========================================
-// 4. MAIN LAGI
-// ========================================
-
-const playAgainBtn =
-  document.getElementById("play-again");
-
-if (playAgainBtn) {
-  playAgainBtn.addEventListener("click", () => {
-    quizIndex = 0;
-    quizScore = 0;
-
-    quizArea.hidden = false;
-    quizResult.hidden = true;
-
+  if (quizIndex < quizQuestions.length - 1) {
+    quizIndex++;
     renderQuizQuestion();
-  });
-}
+  } else {
+    showQuizResult();
+  }
+});
+
+
+document.getElementById("play-again").addEventListener("click", () => {
+  quizIndex = 0;
+  quizScore = 0;
+
+  quizArea.hidden = false;
+  quizResult.hidden = true;
+
+  renderQuizQuestion();
+});
 
 renderQuizQuestion();
 
 
-// ========================================
-// 5. PASSWORD HALAMAN QR
-// ========================================
+/* =====================================
+   4. PASSWORD HALAMAN QR
+===================================== */
 
-// Password sesuai permintaan.
 const QR_PASSWORD = "meandprinces";
 
 const passwordInput =
@@ -357,83 +347,56 @@ const lockAgainButton =
   document.getElementById("lock-again");
 
 
-if (unlockButton) {
-  unlockButton.addEventListener("click", () => {
-    const entered = passwordInput.value;
+function unlockQRPage() {
+  if (passwordInput.value === QR_PASSWORD) {
+    passwordInput.value = "";
 
-    if (entered === QR_PASSWORD) {
-      passwordInput.value = "";
+    passwordFeedback.textContent =
+      "Password benar. Halaman QR dibuka 💕";
 
-      passwordFeedback.textContent =
-        "Password benar. Halaman QR dibuka 💕";
+    showPage("page-qr");
+  } else {
+    passwordFeedback.textContent =
+      "Password belum benar. Coba lagi yaa.";
 
-      pages.forEach((page) => {
-        page.classList.remove("active");
-      });
-
-      document.getElementById("page-qr")
-        .classList.add("active");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    } else {
-      passwordFeedback.textContent =
-        "Password belum benar. Coba lagi yaa.";
-
-      passwordInput.value = "";
-      passwordInput.focus();
-    }
-  });
-
-  passwordInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      unlockButton.click();
-    }
-  });
+    passwordInput.value = "";
+    passwordInput.focus();
+  }
 }
 
+unlockButton.addEventListener("click", unlockQRPage);
 
-// ========================================
-// 6. KUNCI LAGI HALAMAN QR
-// ========================================
-
-if (lockAgainButton) {
-  lockAgainButton.addEventListener("click", () => {
-    pages.forEach((page) => {
-      page.classList.remove("active");
-    });
-
-    document.getElementById("page-lock")
-      .classList.add("active");
-
-    if (passwordFeedback) {
-      passwordFeedback.textContent =
-        "Halaman QR dikunci lagi 🔒";
-    }
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-}
+passwordInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    unlockQRPage();
+  }
+});
 
 
-// ========================================
-// 7. PEMBUAT QR CODE
-// ========================================
+/* =====================================
+   5. KUNCI LAGI HALAMAN QR
+===================================== */
 
-const websiteInput =
-  document.getElementById("website-url");
+lockAgainButton.addEventListener("click", () => {
+  passwordFeedback.textContent =
+    "Halaman khusus untuk pemilik hadiah ini.";
 
-const generateButton =
-  document.getElementById("generate-qr");
+  showPage("page-lock");
+});
 
-const qrResult =
-  document.getElementById("qr-result");
+
+/* =====================================
+   6. QR CODE VERCEL
+===================================== */
+
+// Link website kamu.
+const WEBSITE_URL =
+  "https://pesanuntukprinces.vercel.app";
+
+const QR_IMAGE_URL =
+  "https://api.qrserver.com/v1/create-qr-code/" +
+  "?size=500x500&data=" +
+  encodeURIComponent(WEBSITE_URL);
 
 const qrImage =
   document.getElementById("qr-image");
@@ -444,124 +407,73 @@ const openWebsite =
 const downloadButton =
   document.getElementById("download-qr");
 
-let currentQrUrl = "";
+// Link dan gambar QR langsung ditampilkan.
+openWebsite.href = WEBSITE_URL;
+openWebsite.textContent = "Buka Website 💕";
+
+qrImage.src = QR_IMAGE_URL;
 
 
-if (generateButton) {
-  generateButton.addEventListener("click", () => {
-    const value = websiteInput.value.trim();
+qrImage.addEventListener("error", () => {
+  qrImage.alt =
+    "QR gagal dimuat. Periksa koneksi internet.";
 
-    if (!value) {
-      alert("Masukkan tautan website terlebih dahulu 💕");
-      websiteInput.focus();
-      return;
+  alert(
+    "Gambar QR Code tidak bisa dimuat. " +
+    "Coba periksa koneksi internet."
+  );
+});
+
+
+/* =====================================
+   7. UNDUH QR CODE
+===================================== */
+
+downloadButton.addEventListener("click", async () => {
+  try {
+    const response = await fetch(QR_IMAGE_URL);
+
+    if (!response.ok) {
+      throw new Error("QR gagal diunduh");
     }
 
-    let parsed;
+    const blob = await response.blob();
 
-    try {
-      parsed = new URL(value);
-    } catch {
-      alert(
-        "Tautan belum valid. Contoh: https://website-kamu.com"
-      );
-      return;
-    }
+    const objectURL =
+      URL.createObjectURL(blob);
 
-    if (!["https:", "http:"].includes(parsed.protocol)) {
-      alert("Gunakan tautan yang diawali https:// atau http://");
-      return;
-    }
+    const link =
+      document.createElement("a");
 
-    const publicUrl = parsed.href;
+    link.href = objectURL;
+    link.download = "QR-Code-Pesan-Untuk-Princess.png";
 
-    currentQrUrl =
-      "https://api.qrserver.com/v1/create-qr-code/" +
-      "?size=500x500&data=" +
-      encodeURIComponent(publicUrl);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
 
-    qrResult.hidden = true;
+    setTimeout(() => {
+      URL.revokeObjectURL(objectURL);
+    }, 1000);
 
-    qrImage.onload = () => {
-      qrResult.hidden = false;
+  } catch (error) {
+    window.open(
+      QR_IMAGE_URL,
+      "_blank",
+      "noopener,noreferrer"
+    );
 
-      qrResult.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-      });
-    };
-
-    qrImage.onerror = () => {
-      qrResult.hidden = true;
-
-      alert(
-        "QR Code gagal dimuat. Periksa koneksi internet lalu coba lagi."
-      );
-    };
-
-    openWebsite.href = publicUrl;
-    openWebsite.textContent = "Buka website 💕";
-
-    qrImage.src = currentQrUrl;
-  });
-}
+    alert(
+      "QR dibuka di tab baru. " +
+      "Simpan gambarnya melalui browser."
+    );
+  }
+});
 
 
-// ========================================
-// 8. UNDUH QR CODE
-// ========================================
-
-if (downloadButton) {
-  downloadButton.addEventListener("click", async () => {
-    if (!currentQrUrl) {
-      alert("Buat QR Code terlebih dahulu.");
-      return;
-    }
-
-    try {
-      const response = await fetch(currentQrUrl);
-
-      if (!response.ok) {
-        throw new Error("Gagal mengunduh QR");
-      }
-
-      const blob = await response.blob();
-
-      const objectUrl =
-        URL.createObjectURL(blob);
-
-      const link =
-        document.createElement("a");
-
-      link.href = objectUrl;
-      link.download = "QR-Code-Sayang.png";
-
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      setTimeout(() => {
-        URL.revokeObjectURL(objectUrl);
-      }, 1000);
-
-    } catch {
-      window.open(
-        currentQrUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-      alert(
-        "QR dibuka di tab baru. Simpan gambar dari browser."
-      );
-    }
-  });
-}
-
-
-// ========================================
-// 9. PERIKSA FOTO YANG TIDAK DITEMUKAN
-// ========================================
+/* =====================================
+   8. PERIKSA FOTO
+===================================== */
 
 document.querySelectorAll(".photo img").forEach((img) => {
   img.addEventListener("error", () => {
