@@ -1,4 +1,7 @@
-/* RESET */
+/* =====================================
+   RESET DAN WARNA
+===================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -44,7 +47,10 @@ a:focus-visible {
   outline-offset: 3px;
 }
 
-/* DEKORASI */
+/* =====================================
+   DEKORASI LATAR
+===================================== */
+
 .glow {
   position: fixed;
   width: 300px;
@@ -105,7 +111,10 @@ a:focus-visible {
   }
 }
 
-/* LAYOUT */
+/* =====================================
+   LAYOUT UTAMA
+===================================== */
+
 .site {
   max-width: 1080px;
   width: 100%;
@@ -173,7 +182,10 @@ a:focus-visible {
   );
 }
 
-/* TEKS */
+/* =====================================
+   TYPOGRAPHY
+===================================== */
+
 .script {
   font-family: "Great Vibes", cursive;
   font-size: clamp(27px, 4vw, 37px);
@@ -232,7 +244,10 @@ h3 {
   letter-spacing: 4px;
 }
 
-/* PEMBUKA */
+/* =====================================
+   HALAMAN PEMBUKA
+===================================== */
+
 .cover {
   max-width: 760px;
   min-height: 570px;
@@ -283,7 +298,10 @@ h3 {
   font-size: 10px;
 }
 
-/* TOMBOL */
+/* =====================================
+   TOMBOL
+===================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -296,7 +314,10 @@ h3 {
   font-weight: 600;
   text-align: center;
   text-decoration: none;
-  transition: transform .25s, box-shadow .25s, background .25s;
+  transition:
+    transform .25s,
+    box-shadow .25s,
+    background .25s;
 }
 
 .btn:hover {
@@ -306,7 +327,12 @@ h3 {
 .primary {
   color: #fff;
   border: 1px solid #ffffff70;
-  background: linear-gradient(135deg, #e99ab5, #c65b84, #b8466a);
+  background: linear-gradient(
+    135deg,
+    #e99ab5,
+    #c65b84,
+    #b8466a
+  );
   box-shadow: 0 10px 24px #be4d7738;
 }
 
@@ -329,7 +355,10 @@ h3 {
   margin-top: 14px;
 }
 
-/* JUDUL HALAMAN */
+/* =====================================
+   JUDUL HALAMAN
+===================================== */
+
 .section-head {
   text-align: center;
   margin-bottom: 28px;
@@ -347,7 +376,10 @@ h3 {
   margin-bottom: 10px;
 }
 
-/* SURAT */
+/* =====================================
+   SURAT CINTA
+===================================== */
+
 .letter {
   margin-top: 20px;
 }
@@ -368,7 +400,10 @@ h3 {
   margin-top: 28px;
 }
 
-/* GALERI FOTO */
+/* =====================================
+   GALERI 17 FOTO
+===================================== */
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -409,7 +444,10 @@ h3 {
   overflow-wrap: anywhere;
 }
 
-/* NAVIGASI */
+/* =====================================
+   NAVIGASI
+===================================== */
+
 .nav-row {
   display: flex;
   align-items: center;
@@ -425,7 +463,10 @@ h3 {
   justify-content: center;
 }
 
-/* CERITA */
+/* =====================================
+   CERITA / TIMELINE
+===================================== */
+
 .timeline {
   display: grid;
   gap: 17px;
@@ -471,7 +512,10 @@ h3 {
   line-height: 1.7;
 }
 
-/* DOA */
+/* =====================================
+   DOA
+===================================== */
+
 .prayer {
   padding: 24px;
   margin: 18px 0;
@@ -491,7 +535,10 @@ h3 {
   text-align: justify;
 }
 
-/* LOVE QUIZ */
+/* =====================================
+   LOVE QUIZ
+===================================== */
+
 .quiz-top {
   display: flex;
   justify-content: space-between;
@@ -653,7 +700,10 @@ h3 {
   display: none !important;
 }
 
-/* PENUTUP */
+/* =====================================
+   PENUTUP
+===================================== */
+
 .final-card {
   text-align: center;
   max-width: 760px;
@@ -676,7 +726,10 @@ h3 {
   margin-top: 26px !important;
 }
 
-/* PASSWORD DAN QR */
+/* =====================================
+   PASSWORD DAN QR CODE
+===================================== */
+
 .field-label {
   display: block;
   text-align: left;
@@ -728,7 +781,7 @@ h3 {
 
 .qr-result img {
   display: block;
-  width: 250px;
+  width: 280px;
   max-width: 100%;
   aspect-ratio: 1;
   object-fit: contain;
@@ -741,20 +794,31 @@ h3 {
 
 .qr-result p {
   font-size: 13px;
+  line-height: 1.8;
   margin-bottom: 12px;
   text-align: center;
 }
 
 .qr-result a {
-  display: block;
   overflow-wrap: anywhere;
-  color: #b8466a;
-  font-size: 13px;
-  margin-bottom: 16px;
-  text-align: center;
 }
 
-/* FOOTER */
+.qr-caption {
+  color: #a15b76;
+}
+
+#open-website {
+  box-sizing: border-box;
+}
+
+#download-qr {
+  margin-top: 12px;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
 .footer {
   text-align: center;
   padding: 27px 8px 12px;
@@ -767,7 +831,10 @@ h3 {
   font-size: 10px;
 }
 
-/* TABLET */
+/* =====================================
+   TABLET
+===================================== */
+
 @media (max-width: 800px) {
   .site {
     padding: 17px 13px;
@@ -788,7 +855,10 @@ h3 {
   }
 }
 
-/* HP */
+/* =====================================
+   HP
+===================================== */
+
 @media (max-width: 480px) {
   .site {
     padding: 12px 9px;
@@ -908,6 +978,7 @@ h3 {
   }
 }
 
+/* HORMATI PENGATURAN REDUKSI ANIMASI */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
